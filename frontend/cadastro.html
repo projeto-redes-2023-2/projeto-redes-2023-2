@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333; 
+            background: #f4f4f4;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+            z-index: 1;
+        }
+
+        h2 {
+            color: #333; 
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            max-width: 100%;
+            margin: 20px auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+            text-align: justify;
+        }
+
+        .required::before {
+            content: " *";
+            color: red;
+        }
+
+        input,
+        select {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            margin-top: 0;
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd),
+                        linear-gradient(-45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+<h2 style="font-size: 24px;">Registre-se</h2>
+        <form id="registrationForm" action="processar_registro.php" method="post">
+            <label for="nickname" class="required">Nickname:</label>
+            <input type="text" id="nickname" name="nickname" required>
+            <label for="password" class="required">Senha:</label>
+            <input type="password" id="password" name="password" required>
+            <label for="confirm_password" class="required">Confirmar Senha:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+            <p id="passwordMatchError">As senhas não coincidem.</p>
+            <label for="dialogue_type" class="required">Capacidade de Diálogo:</label>
+            <select id="dialogue_type" name="dialogue_type" class="required">
+                <option value="chat">Chat via Teclado</option>
+                <option value="video">Video Call - Voz e Vídeo</option>
+                <option value="both">Ambos (Teclado e Video Call)</option>
+            </select>
+            <input type="submit" value="Registrar">
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.getElementById('registrationForm');
+            var passwordInput = document.getElementById('password');
+            var confirmPasswordInput = document.getElementById('confirm_password');
+            var passwordMatchError = document.getElementById('passwordMatchError');
+
+            form.addEventListener('submit', function (event) {
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    event.preventDefault();
+                    passwordMatchError.style.display = 'block';
+                } else {
+                    passwordMatchError.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
