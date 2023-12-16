@@ -14,7 +14,7 @@
         header {
             position: fixed;
             top: 0;
-            width: 100%;
+            width: 97%;
             z-index: 2;
             height: 40px;
             background: linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd),
@@ -108,6 +108,15 @@
             max-width: 400px;
             border-radius: 8px;
         }
+        .cta-buttons{
+            color: #000;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
         </style>
         </head>
     <script
@@ -118,15 +127,15 @@
     </head>
     <body>
     <header>
-        <div>
+        <div cta-buttons>
+            <a href="index.html" class="cta-button">Logout</a>
         </div>
     </header>
     <div class="content">
         <form method="post" class="buttons">
         <h3>Selecione a sala</h3>
         <div class="join">
-            <input type="text" placeholder="Ex.: 1245" name="code" value="" />
-            <button type="submit" name="join">Código da sala</button>
+            <input type="text" placeholder="Código da sala" name="code" value="" />
         </div>
         <button type="submit" name="create" class="create-btn">Criar</button>
         <button type="submit" name="create" class="create-btn">Entrar</button>
