@@ -8,31 +8,50 @@
         href="{{url_for('static', filename='css/style.css')}}"
     />
     <style>
+        body{
+            font-family: 'Arial', sans-serif;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 2;
+            height: 40px;
+            background: linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd),
+                        linear-gradient(-45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 5px 20px;
+        }
         .content {
             display: flex;
             align-items: center;
             justify-content: center;
-            }
+        }
             
-            .buttons {
+        .buttons {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            }
+        }
             
-            .join {
+        .join {
             display: flex;
             flex-direction: row;
             width: 100%;
-            }
+        }
             
-            .create-btn {
+        .create-btn {
             width: 100%;
-            }
-            
-            .message-box {
+        }
+        
+        .message-box {
             border-color: black;
             border-width: 2px;
             border-style: solid;
@@ -43,41 +62,53 @@
             flex-direction: column;
             width: 80vw;
             align-items: stretch;
-            }
+        }
             
-            .messages {
+        .messages {
             overflow-y: scroll;
             flex: 1;
             width: 100%;
-            }
+        }
             
-            .inputs {
+        .inputs {
             padding: 10px;
             display: flex;
-            }
+        }
+        h3 {
+            color: #333;
+            font-size: 20px;
             
-            h2 {
+        }
+            
+        h2 {
             text-align: center;
-            }
+        }
             
-            #message {
+        #message {
             flex: 1;
-            }
+        }
             
-            .text {
+        .text {
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
             padding-left: 10px;
             padding-right: 10px;
-            }
+        }
             
-            .muted {
+        .muted {
             font-size: 10px;
             color: darkgray;
-            }
-            </style>
+        }
+        form {
+            margin-top: 15%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-width: 400px;
+            border-radius: 8px;
+        }
+        </style>
         </head>
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
@@ -86,6 +117,10 @@
     ></script>
     </head>
     <body>
+    <header>
+        <div>
+        </div>
+    </header>
     <div class="content">
         <form method="post" class="buttons">
         <h3>Selecione a sala</h3>
@@ -93,7 +128,8 @@
             <input type="text" placeholder="Ex.: 1245" name="code" value="" />
             <button type="submit" name="join">Código da sala</button>
         </div>
-        <button type="submit" name="create" class="create-btn">Criar sala</button>
+        <button type="submit" name="create" class="create-btn">Criar</button>
+        <button type="submit" name="create" class="create-btn">Entrar</button>
         <ul>
             <li>-</li>
         </ul>
