@@ -7,21 +7,56 @@ from string import ascii_uppercase
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "hjhjsdahhds"
 socketio = SocketIO(app)
 
+users = {}
 
-@app.route('/cadastro.html')
+
+@app.route('/cadastro.html', methods=['GET', 'POST'])
 def cadastro():
-    return render_template('cadastro.html')
+    error_message = None
+
+    if request.method == 'POST':
+        nickname = request.form.get('nickname')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+        dialogue_type = request.form.get('dialogue_type')
+
+        if password != confirm_password:
+            error_message = "As senhas não coincidem."
+        else:
+            if nickname in users:
+                error_message = "Este nome de usuário já está em uso. Escolha outro."
+            else:
+                users[nickname] = {"password": password, "dialogue_type": dialogue_type}
+                return redirect(url_for('login'))
+
+    return render_template('cadastro.html', error_message=error_message)
 
 @app.route('/client')
 def client():
     return render_template('client.html')
 
-
-@app.route('/login.html')
+@app.route('/login.html', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    error_message = None
+    if request.method == 'POST':
+        nome = request.form.get('nickname')
+        senha = request.form.get('password')
+
+        print(nome)
+        print(senha)
+        
+        if nome in users and users[nome]["password"] == senha:
+
+            session["user"] = nome  
+            return redirect(url_for('room'))
+        else:
+
+            error_message = "Usuário ou senha incorretos"
+
+    return render_template('login.html', error_message=error_message)
 
 
 @app.route('/')

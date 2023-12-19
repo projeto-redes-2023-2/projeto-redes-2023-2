@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,14 +18,19 @@
             overflow: hidden;
         }
 
+        .content {
+            text-align: center;
+        }
+
         .container {
             position: relative;
             text-align: center;
-            z-index: 1;
+            z-index: 2;
+            margin-bottom: 20px; 
         }
 
         h2 {
-            color: #333; 
+            color: #333;
         }
 
         form {
@@ -34,9 +40,9 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 250px;
             max-width: 100%;
-            margin: 20px auto;
+            margin: 0 auto; 
             position: relative;
-            z-index: 2;
+            z-index: 3;
         }
 
         label {
@@ -44,11 +50,6 @@
             margin: 10px 0 5px;
             color: #555;
             text-align: justify;
-        }
-
-        .required::before {
-            content: " *";
-            color: red;
         }
 
         input,
@@ -71,14 +72,6 @@
             background-color: #45a049;
         }
 
-        p {
-            margin-top: 0;
-            color: red;
-            font-size: 14px;
-            display: none;
-        }
-
-
         body::before {
             content: '';
             position: fixed;
@@ -93,45 +86,43 @@
             background-size: 40px 40px;
             background-position: 0 0, 20px 20px;
         }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px; 
+        }
     </style>
 </head>
+
 <body>
-    <div class="container">
-<h2 style="font-size: 24px;">Registre-se</h2>
-        <form id="registrationForm" action="processar_registro.php" method="post">
-            <label for="nickname" class="required">Nickname:</label>
-            <input type="text" id="nickname" name="nickname" required>
-            <label for="password" class="required">Senha:</label>
-            <input type="password" id="password" name="password" required>
-            <label for="confirm_password" class="required">Confirmar Senha:</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
-            <p id="passwordMatchError">As senhas não coincidem.</p>
-            <label for="dialogue_type" class="required">Capacidade de Diálogo:</label>
-            <select id="dialogue_type" name="dialogue_type" class="required">
-                <option value="chat">Chat via Teclado</option>
-                <option value="video">Video Call - Voz e Vídeo</option>
-                <option value="both">Ambos (Teclado e Video Call)</option>
-            </select>
-            <input type="submit" value="Registrar">
-        </form>
+
+    <div class="content">
+        <div class="container">
+            <h2>Registre-se</h2>
+            <form id="registrationForm" action="{{ url_for('cadastro') }}" method="post">
+                <label for="nickname" class="required">Nickname:</label>
+                <input type="text" id="nickname" name="nickname" required>
+                <label for="password" class="required">Senha:</label>
+                <input type="password" id="password" name="password" required>
+                <label for="confirm_password" class="required">Confirmar Senha:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+                <label for="dialogue_type" class="required">Capacidade de Diálogo:</label>
+                <select id="dialogue_type" name="dialogue_type" class="required">
+                    <option value="chat">Chat via Teclado</option>
+                    <option value="video">Video Call - Voz e Vídeo</option>
+                    <option value="both">Ambos (Teclado e Video Call)</option>
+                </select>
+                <input type="submit" value="Registrar">
+            </form>
+        </div>
+
+        <div class="error-message">
+            {% if error_message %}
+                {{ error_message }}
+            {% endif %}
+        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var form = document.getElementById('registrationForm');
-            var passwordInput = document.getElementById('password');
-            var confirmPasswordInput = document.getElementById('confirm_password');
-            var passwordMatchError = document.getElementById('passwordMatchError');
-
-            form.addEventListener('submit', function (event) {
-                if (passwordInput.value !== confirmPasswordInput.value) {
-                    event.preventDefault();
-                    passwordMatchError.style.display = 'block';
-                } else {
-                    passwordMatchError.style.display = 'none';
-                }
-            });
-        });
-    </script>
 </body>
+
 </html>

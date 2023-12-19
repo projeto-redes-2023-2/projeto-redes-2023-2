@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,19 +13,24 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: #333; 
+            color: #333;
             background: #f4f4f4;
             overflow: hidden;
+        }
+
+        .content {
+            text-align: center;
         }
 
         .container {
             position: relative;
             text-align: center;
             z-index: 2;
+            margin-bottom: 20px; 
         }
 
         h2 {
-            color: #333; 
+            color: #333;
             font-size: 24px;
         }
 
@@ -35,7 +41,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 250px;
             max-width: 100%;
-            margin: 20px auto;
+            margin: 0 auto; 
             position: relative;
             z-index: 3;
         }
@@ -77,22 +83,39 @@
             pointer-events: none;
             z-index: -1;
             background: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd),
-                        linear-gradient(-45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
+                linear-gradient(-45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
             background-size: 40px 40px;
             background-position: 0 0, 20px 20px;
         }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px; 
+        }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h2>Login</h2>
-        <form id="loginForm" action="processar_login.php" method="post">
-            <label for="nickname" class="required">Nickname:</label>
-            <input type="text" id="nickname" name="nickname" required>
-            <label for="password" class="required">Senha:</label>
-            <input type="password" id="password" name="password" required>
-            <input type="submit" value="Entrar">
-        </form>
+
+    <div class="content">
+        <div class="container">
+            <h2>Login</h2>
+            <form id="loginForm" action="{{ url_for('login') }}" method="post">
+                <label for="nickname" class="required">Nickname:</label>
+                <input type="text" id="nickname" name="nickname" required>
+                <label for="password" class="required">Senha:</label>
+                <input type="password" id="password" name="password" required>
+                <input type="submit" value="Entrar">
+            </form>
+        </div>
+
+        <div class="error-message">
+            {% if error_message %}
+                {{ error_message }}
+            {% endif %}
+        </div>
     </div>
 </body>
+
 </html>
