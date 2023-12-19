@@ -1,0 +1,140 @@
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .join {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .create-btn {
+    width: 100%;
+  }
+  
+  .message-box {
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    align-items: stretch;
+  }
+  
+  .messages {
+    overflow-y: scroll;
+    flex: 1;
+    width: 100%;
+  }
+  
+  .inputs {
+    padding: 10px;
+    display: flex;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  #message {
+    flex: 1;
+  }
+  
+  .text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .muted {
+    font-size: 10px;
+    color: darkgray;
+  }
+  
+  .chat-form-container {
+    max-width: 500px; /* Aumente o valor conforme necessário */
+    margin: 50px auto;
+    padding: 30px; /* Aumente o valor conforme necessário */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .chat-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 5px;
+  }
+  
+  .join-btn{
+    background-color: #4caf50;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 15px; 
+  }
+  .create-btn {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #4caf50; 
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 15px;
+  }
+  
+  .join-btn:hover,
+  .create-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .error-message {
+    color: #ff0000;
+    margin-top: 10px;
+  }
+  

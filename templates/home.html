@@ -1,147 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-    <meta charset="UTF-8" />
-    <title>Chat App</title>
-    <link
-        rel="stylesheet"
-        href="{{url_for('static', filename='css/style.css')}}"
-    />
-    <style>
-        body{
-            font-family: 'Arial', sans-serif;
-        }
-        header {
-            position: fixed;
-            top: 0;
-            width: 97%;
-            z-index: 2;
-            height: 40px;
-            background: linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd),
-                        linear-gradient(-45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding: 5px 20px;
-        }
-        .content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-            
-        .buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-            
-        .join {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-        }
-            
-        .create-btn {
-            width: 100%;
-        }
-        
-        .message-box {
-            border-color: black;
-            border-width: 2px;
-            border-style: solid;
-            border-radius: 10px;
-            background-color: whitesmoke;
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            width: 80vw;
-            align-items: stretch;
-        }
-            
-        .messages {
-            overflow-y: scroll;
-            flex: 1;
-            width: 100%;
-        }
-            
-        .inputs {
-            padding: 10px;
-            display: flex;
-        }
-        h3 {
-            color: #333;
-            font-size: 20px;
-            
-        }
-            
-        h2 {
-            text-align: center;
-        }
-            
-        #message {
-            flex: 1;
-        }
-            
-        .text {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-            
-        .muted {
-            font-size: 10px;
-            color: darkgray;
-        }
-        form {
-            margin-top: 15%;
-            border: 1px solid #ccc;
-            padding: 10px;
-            max-width: 400px;
-            border-radius: 8px;
-        }
-        .cta-buttons{
-            color: #000;
-            font-size: 16px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: color 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        </style>
-        </head>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
-        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
-        crossorigin="anonymous"
-    ></script>
-    </head>
-    <body>
-    <header>
-        <div cta-buttons>
-            <a href="index.html" class="cta-button">Logout</a>
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="chat-form-container">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <form method="post" class="chat-form">
+      <h3>Entrar na Sala</h3>
+      <div class="form-group">
+        <label for="name">Digite seu nome:</label>
+        <input
+          type="text"
+          id="name"
+          placeholder="Escolha seu nickname"
+          name="name"
+          value="{{ name }}"
+          required
+        />
+      </div>
+      
+      <button type="submit" name="join" class="join-btn">Entre na sala</button>
+
+      <div class="form-group">
+        <h3>Ou então</h3>
+        <label for="code">Código da sala:</label>
+        <input
+          type="text"
+          id="code"
+          placeholder="Já tem um código? Digite aqui"
+          name="code"
+          value="{{ code }}"
+          required
+        />
+      </div>
+
+      <button type="submit" name="create" class="create-btn">Crie a sala</button>
+
+      {% if error %}
+        <div class="error-message">
+          {{ error }}
         </div>
-    </header>
-    <div class="content">
-        <form method="post" class="buttons">
-        <h3>Selecione a sala</h3>
-        <div class="join">
-            <input type="text" placeholder="Código da sala" name="code" value="" />
-        </div>
-        <button type="submit" name="create" class="create-btn">Criar</button>
-        <button type="submit" name="create" class="create-btn">Entrar</button>
-        <ul>
-            <li>-</li>
-        </ul>
-        </form>
-    </div>
-<html>
+      {% endif %}
+    </form>
+  </div>
+{% endblock %}

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
+    
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -75,13 +76,14 @@
             margin: 60px 20px 20px;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center; /* Centralizar o conteúdo horizontalmente */
             z-index: 2;
         }
 
         .text {
             padding: 0 20px;
             z-index: 2;
+            text-align: center; /* Centralizar o texto horizontalmente */
         }
 
         h2 {
@@ -95,14 +97,28 @@
             color: #555;
             margin-bottom: 20px;
         }
+
+        .chat-button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 18px;
+        }
+
+        .chat-button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
-
     <header>
         <div class="cta-buttons">
-            <a href="cadastro" class="cta-button" id="cadastroButton">Cadastro</a>
-            <a href="login.html" class="cta-button">Login</a>
+            <a href="/cadastro">Cadastro</a>
+            <a href="login.html" class="cta-button" id="loginButton">Login</a>
         </div>
     </header>
 
@@ -110,14 +126,14 @@
         <div class="text">
             <h2>Bem-vindo ao Nosso Ambiente de Comunicação</h2>
             <p>Conecte-se com pessoas que compartilham seus interesses. Crie um ambiente único para conversas por chat ou vídeo.</p>
+            <button class="chat-button" onclick="goToChat()">Clique aqui para ir ao chat</button>
         </div>
     </div>
 
     <script>
-        document.getElementById('cadastroButton').addEventListener('click', function(event) {
-            event.preventDefault();
-            window.location.href = 'cadastro.html';
-        });
+        function goToChat() {
+            window.location.href = 'home'; 
+        }
     </script>
 </body>
 </html>
