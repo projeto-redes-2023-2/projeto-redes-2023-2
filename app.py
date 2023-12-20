@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, render_template, request, session, redirect
-
 from flask_socketio import join_room, leave_room, send, SocketIO
 import random
 from string import ascii_uppercase
-
+import json
+import os
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
@@ -12,6 +12,11 @@ socketio = SocketIO(app)
 
 users = {}
 
+try:
+    with open("users.json", "r") as file:
+        users = json.load(file)
+except (FileNotFoundError, json.decoder.JSONDecodeError):
+    print("O arquivo users.json está vazio ou não contém um JSON válido.")
 
 @app.route('/cadastro.html', methods=['GET', 'POST'])
 def cadastro():
@@ -30,9 +35,14 @@ def cadastro():
                 error_message = "Este nome de usuário já está em uso. Escolha outro."
             else:
                 users[nickname] = {"password": password, "dialogue_type": dialogue_type}
+
+                with open("users.json", "w") as file:
+                    json.dump(users, file)
+
                 return redirect(url_for('login'))
 
     return render_template('cadastro.html', error_message=error_message)
+
 
 @app.route('/client')
 def client():
