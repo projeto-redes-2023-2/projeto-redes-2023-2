@@ -86,7 +86,7 @@ def login():
 def home_with_welcome():
     if request.method == 'POST':
         name = request.form.get('name')
-        code = request.form.get('code')
+        code = request.form.get('dialogue_type')
         join = request.form.get('join', False)
         create = request.form.get('create', False)
 
@@ -98,17 +98,25 @@ def home_with_welcome():
 
         room = code
         if create != False:
-            room = generate_unique_code(4)
-            rooms[room] = {"members": 0, "messages": []}
+            user_data = users.get(name, {})
+            dialogue_type = user_data.get('dialogue_type', '')
+            room = user_data.get('dialogue_type', '')
+            if not dialogue_type:
+                return render_template("home.html", error="User dialogue_type not found.", code=code, name=name)
+            if dialogue_type not in rooms:
+                rooms[room] = {"members": 0, "messages": []}
         elif code not in rooms:
             return render_template("home.html", error="Room does not exist.", code=code, name=name)
-
+        
+        session["dialogue_type"] = room
         session["room"] = room
         session["name"] = name
         return redirect(url_for("room"))
 
     # Obter o nome da sessão
     nome = session.get('name')
+    dialogue_type = session.get('dialogue_type')
+
 
     if nome:
         # Se 'name' estiver na sessão, renderiza a página home.html com a mensagem de boas-vindas

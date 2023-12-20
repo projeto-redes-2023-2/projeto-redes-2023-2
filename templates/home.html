@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     {% if nome %}
       <h3>Bem-vindo, {{ nome }}</h3>
+      <!-- Adicione o dialogue_type se estiver disponível -->
+      {% if dialogue_type %}
+        <p>Modo de Diálogo: {{ dialogue_type }}</p>
+      {% endif %}
     {% else %}
       <!-- Mostre outra mensagem ou ações, se necessário -->
     {% endif %}
