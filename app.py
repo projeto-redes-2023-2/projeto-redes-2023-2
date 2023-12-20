@@ -49,6 +49,7 @@ def cadastro():
             else:
                 users[nickname] = {"password": password, "dialogue_type": dialogue_type}
 
+                session["name"] = nickname
                 with open("users.json", "w") as file:
                     json.dump(users, file)
 
@@ -60,7 +61,6 @@ def cadastro():
 @app.route('/client')
 def client():
     return render_template('client.html')
-
 @app.route('/login.html', methods=['GET', 'POST'])
 def login():
     error_message = None
@@ -76,13 +76,46 @@ def login():
             login_user(user)
             session["user"] = nome
             session["just_logged_in"] = True
-            return redirect(url_for('index'))
+            return redirect(url_for('home_with_welcome'))
         else:
-
             error_message = "Usuário ou senha incorretos"
 
     return render_template('login.html', error_message=error_message)
 
+@app.route('/home_with_welcome', methods=['POST', 'GET'])
+def home_with_welcome():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        code = request.form.get('code')
+        join = request.form.get('join', False)
+        create = request.form.get('create', False)
+
+        if not name:
+            return render_template("home.html", error="Please enter a name.", code=code, name=name)
+
+        if join != False and not code:
+            return render_template("home.html", error="Please enter a room code.", code=code, name=name)
+
+        room = code
+        if create != False:
+            room = generate_unique_code(4)
+            rooms[room] = {"members": 0, "messages": []}
+        elif code not in rooms:
+            return render_template("home.html", error="Room does not exist.", code=code, name=name)
+
+        session["room"] = room
+        session["name"] = name
+        return redirect(url_for("room"))
+
+    # Obter o nome da sessão
+    nome = session.get('name')
+
+    if nome:
+        # Se 'name' estiver na sessão, renderiza a página home.html com a mensagem de boas-vindas
+        return render_template('home.html', nome=nome)
+    else:
+        # Caso 'name' não esteja na sessão, você pode redirecionar ou mostrar outra mensagem
+        return redirect(url_for('home'))
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)

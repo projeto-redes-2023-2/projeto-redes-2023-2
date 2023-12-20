@@ -67,7 +67,14 @@
     font-size: 10px;
     color: darkgray;
   }
-  
+  .status {
+    max-width: 500px; /* Aumente o valor conforme necessário */
+    margin: 50px auto;
+    padding: 30px; /* Aumente o valor conforme necessário */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
   .chat-form-container {
     max-width: 500px; /* Aumente o valor conforme necessário */
     margin: 50px auto;

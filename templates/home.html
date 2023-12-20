@@ -1,11 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-  <div class="chat-form-container">
+<div class="header-bar">
+  <div class="status">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <form method="post" class="chat-form">
-      <h3>Entrar na Sala</h3>
+    {% if nome %}
+      <h3>Bem-vindo, {{ nome }}</h3>
+    {% else %}
+      <!-- Mostre outra mensagem ou ações, se necessário -->
+    {% endif %}
+    <h3>Status: Online</h3>
+  </div>
+</div>
+
+<div class="chat-form-container">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <form method="post" class="chat-form">
+    <h3>Entrar na Sala</h3>
+    {% if not nome %}
+      <!-- Somente mostre o campo de entrada se o nome não estiver disponível -->
       <div class="form-group">
         <label for="name">Digite seu nome:</label>
         <input
@@ -17,29 +30,30 @@
           required
         />
       </div>
-      <button type="submit" name="create" class="create-btn">Crie a sala</button>
+    {% else %}
+      <!-- Adicione um campo oculto com o nome do usuário -->
+      <input type="hidden" name="name" value="{{ nome }}">
+    {% endif %}
+    <button type="submit" name="create" class="create-btn">Crie a sala</button>
 
-      <div class="form-group">
-        <h3>Ou então</h3>
-        <label for="code">Código da sala:</label>
-        <input
-          type="text"
-          id="code"
-          placeholder="Já tem um código? Digite aqui"
-          name="code"
-          value="{{ code }}"
-          
-        />
+    <div class="form-group">
+      <h3>Ou então</h3>
+      <label for="code">Código da sala:</label>
+      <input
+        type="text"
+        id="code"
+        placeholder="Já tem um código? Digite aqui"
+        name="code"
+        value="{{ code }}"
+      />
+    </div>
+    <button type="submit" name="join" class="join-btn">Entre na sala</button>
+
+    {% if error %}
+      <div class="error-message">
+        {{ error }}
       </div>
-      <button type="submit" name="join" class="join-btn">Entre na sala</button>
-
-
-
-      {% if error %}
-        <div class="error-message">
-          {{ error }}
-        </div>
-      {% endif %}
-    </form>
-  </div>
+    {% endif %}
+  </form>
+</div>
 {% endblock %}
