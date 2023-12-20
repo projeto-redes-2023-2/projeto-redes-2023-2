@@ -23,18 +23,22 @@
 
     const messages = document.getElementById("messages");
 
-    const createMessage = (name, msg) => {
-      const content = `
-        <div class="text">
-            <span>
-                <strong>${name}</strong>: ${msg}
-            </span>
-            <span class="muted">
-                ${new Date().toLocaleString()}
-            </span>
-        </div>
-      `;
-      messages.innerHTML += content;
+    const createMessage = (name, msg, isUser) => {
+      // Verificar se a mensagem é do próprio usuário para evitar duplicação
+      const isSelf = isUser && name === "Você";
+      if (!isSelf) {
+        const content = `
+          <div class="text ${isUser ? 'user' : ''}">
+              <span>
+                  <strong>${name}</strong>: ${msg}
+              </span>
+              <span class="muted">
+                  ${new Date().toLocaleString()}
+              </span>
+          </div>
+        `;
+        messages.innerHTML += content;
+      }
     };
 
     socketio.on("message", (data) => {
@@ -45,6 +49,7 @@
       const message = document.getElementById("message");
       if (message.value === "") return;
       socketio.emit("message", { data: message.value });
+      createMessage("Você", message.value, true);
       message.value = "";
     };
   </script>

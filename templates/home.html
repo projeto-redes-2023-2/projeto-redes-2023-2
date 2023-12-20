@@ -1,28 +1,118 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+  .header-bar {
+    margin-bottom: 40px;
+  }
+
+  .user-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .user-icon::before {
+    content: "\1F464";
+    font-size: 50px;
+    margin-right: 10px;
+  }
+
+  .status {
+    text-align: center;
+  }
+
+  .chat-form-container {
+    max-width: 200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .chat-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  h3 {
+    align-self: flex-start;
+    margin-bottom: 10px;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  input {
+    padding: 10px;
+    width: calc(100% - 20px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 5px;
+  }
+
+  .join-btn,
+  .create-btn {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  .join-btn,
+  .create-btn {
+    background-color: #4caf50;
+  }
+
+  .join-btn:hover,
+  .create-btn:hover {
+    background-color: #45a049;
+  }
+
+  .error-message {
+    color: #ff0000;
+    margin-top: 10px;
+    width: 100%;
+  }
+</style>
+
 <div class="header-bar">
+  <div class="user-icon"></div>
   <div class="status">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     {% if nome %}
       <h3>Bem-vindo, {{ nome }}</h3>
-      <!-- Adicione o dialogue_type se estiver disponível -->
       {% if dialogue_type %}
         <p>Modo de Diálogo: {{ dialogue_type }}</p>
       {% endif %}
     {% else %}
-      <!-- Mostre outra mensagem ou ações, se necessário -->
     {% endif %}
     <h3>Status: Online</h3>
   </div>
 </div>
 
 <div class="chat-form-container">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <form method="post" class="chat-form">
     <h3>Entrar na Sala</h3>
     {% if not nome %}
-      <!-- Somente mostre o campo de entrada se o nome não estiver disponível -->
       <div class="form-group">
         <label for="name">Digite seu nome:</label>
         <input
@@ -35,13 +125,11 @@
         />
       </div>
     {% else %}
-      <!-- Adicione um campo oculto com o nome do usuário -->
       <input type="hidden" name="name" value="{{ nome }}">
     {% endif %}
-    <button type="submit" name="create" class="create-btn">Crie a sala</button>
+    <button type="submit" name="create" class="create-btn">Entrar</button>
 
     <div class="form-group">
-      <h3>Ou então</h3>
       <label for="code">Código da sala:</label>
       <input
         type="text"
@@ -51,7 +139,7 @@
         value="{{ code }}"
       />
     </div>
-    <button type="submit" name="join" class="join-btn">Entre na sala</button>
+    <button type="submit" name="join" class="join-btn">Entrar</button>
 
     {% if error %}
       <div class="error-message">
