@@ -11,15 +11,18 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "hjhjsdahhds"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 socketio = SocketIO(app)
+
+
 
 users = {}
 
 # Configuração do Flask-Login
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-
-
 
 
 try:
@@ -85,7 +88,7 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 @app.route('/', endpoint='index')
-def teste():
+def index():
     return render_template('index.html')
 
 @socketio.on('message')
@@ -96,12 +99,7 @@ def handle_message(message):
 
 
         
-if __name__ == '__main__':app = Flask(__name__)
-app.config["SECRET_KEY"] = "hjhjsdahhds"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"  # Usando SQLite
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-socketio = SocketIO(app)
+
 
 # Definição da classe User
 class User(db.Model, UserMixin):
@@ -206,3 +204,5 @@ def room():
     return render_template("room.html", code=room, messages=rooms[room]["messages"])
 
 
+if __name__ == '__main__':
+    socketio.run(app, debug=True)
