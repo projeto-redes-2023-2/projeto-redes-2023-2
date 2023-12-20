@@ -113,14 +113,30 @@
             background-color: #45a049;
         }
     </style>
-</head>
 <body>
     <header>
         <div class="cta-buttons">
-            <a href="cadastro.html" class="cta-button" id = "cadastroButton">Cadastro</a>
-            <a href="login.html" class="cta-button" id="loginButton">Login</a>
+            {% if current_user.is_authenticated %}
+                <!-- Se o usuário estiver autenticado, exibir o nome do usuário e botão de logout -->
+                <span>Bem-vindo, {{ current_user.id }}!</span>
+                <a href="{{ url_for('logout') }}" class="cta-button">Sair</a>
+            {% else %}
+                <!-- Se o usuário não estiver autenticado, exibir botões de cadastro e login -->
+                <a href="{{ url_for('cadastro') }}" class="cta-button" id="cadastroButton">Cadastro</a>
+                <a href="{{ url_for('login') }}" class="cta-button" id="loginButton">Login</a>
+            {% endif %}
         </div>
     </header>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
 
     <div class="container">
         <div class="text">
@@ -132,8 +148,9 @@
 
     <script>
         function goToChat() {
-            window.location.href = 'home'; 
+            window.location.href = 'home';
         }
     </script>
 </body>
+
 </html>

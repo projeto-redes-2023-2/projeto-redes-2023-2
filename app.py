@@ -5,12 +5,22 @@ from string import ascii_uppercase
 import json
 import os
 from flask_socketio import SocketIO, emit
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "hjhjsdahhds"
 socketio = SocketIO(app)
 
 users = {}
+
+# Configuração do Flask-Login
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+
+
+
 
 try:
     with open("users.json", "r") as file:
@@ -59,17 +69,22 @@ def login():
         print(senha)
         
         if nome in users and users[nome]["password"] == senha:
-
-            session["user"] = nome  
-            return redirect(url_for('room'))
+            user = User(id=nome, password=users[nome]["password"], dialogue_type=users[nome]["dialogue_type"])            
+            login_user(user)
+            session["user"] = nome
+            session["just_logged_in"] = True
+            return redirect(url_for('index'))
         else:
 
             error_message = "Usuário ou senha incorretos"
 
     return render_template('login.html', error_message=error_message)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
-@app.route('/')
+@app.route('/', endpoint='index')
 def teste():
     return render_template('index.html')
 
@@ -80,9 +95,19 @@ def handle_message(message):
 
 
 
+        
 if __name__ == '__main__':app = Flask(__name__)
 app.config["SECRET_KEY"] = "hjhjsdahhds"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"  # Usando SQLite
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 socketio = SocketIO(app)
+
+# Definição da classe User
+class User(db.Model, UserMixin):
+    id = db.Column(db.String(20), primary_key=True)
+    password = db.Column(db.String(60), nullable=False)
+    dialogue_type = db.Column(db.String(20), nullable=False)
 
 rooms = {}
 
