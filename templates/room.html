@@ -3,18 +3,17 @@
 {% block content %}
   <div class="message-box">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <h2>Sala do chat: {{ code }}</h2>
+    <h2>Sala do Chat: {{ code }}</h2>
     <div class="messages" id="messages"></div>
     <div class="inputs">
-      <input
-        type="text"
+      <textarea
         rows="3"
-        placeholder="Message"
+        placeholder="Digite sua mensagem..."
         name="message"
         id="message"
-      />
-      <button type="button" name="send" id="send-btn" onClick="sendMessage()">
-        Send
+      ></textarea>
+      <button type="button" name="send" id="send-btn" onclick="sendMessage()">
+        Enviar
       </button>
     </div>
   </div>
