@@ -1,0 +1,14 @@
+$TTL 604800
+@ IN SOA ns1.projetoredes20232.unb.br. admin.projetoredes20232.unb.br. (
+    2022122001;
+    28800;
+    604800;
+    604800;
+    86400
+)
+
+@ IN NS ns1.projetoredes20232.unb.br.
+@ IN A 192.168.0.121
+ns1 IN A 192.168.0.121
+www IN A 192.168.0.121
+projetoredes20232.unb.br. IN A 192.168.0.121
